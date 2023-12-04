@@ -6,4 +6,8 @@ object Constants {
 
     const val PUBLIC_KEY = "0cd30e0ff90b6beb6e4f24628ba64226"
     const val PRIVATE_KEY = "596b5651418e0083e81c92f19170d7c184f6b5e6\n"
+
+    const val APIKEY = "apikey"
+    const val HASH = "hash"
+    const val TS = "ts"
 }

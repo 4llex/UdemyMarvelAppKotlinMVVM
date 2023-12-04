@@ -1,6 +1,5 @@
 package daniel.lop.io.marvelappstarter.data.remote
 
-import daniel.lop.io.marvelappstarter.data.model.character.CharacterModel
 import daniel.lop.io.marvelappstarter.data.model.character.CharacterModelResponse
 import daniel.lop.io.marvelappstarter.data.model.comics.ComicModelResponse
 import retrofit2.Response

@@ -15,7 +15,7 @@ interface ServiceApi {
     ): Response<CharacterModelResponse>
 
 
-    @GET("characters/{charactersId}/comics")
+    @GET("characters/{characterId}/comics")
     suspend fun getComics(
         @Path(
             value = "characterId",

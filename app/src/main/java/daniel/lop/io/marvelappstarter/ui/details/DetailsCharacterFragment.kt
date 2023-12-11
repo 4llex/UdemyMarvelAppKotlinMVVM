@@ -2,14 +2,17 @@ package daniel.lop.io.marvelappstarter.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import daniel.lop.io.marvelappstarter.R
 import daniel.lop.io.marvelappstarter.data.model.character.CharacterModel
@@ -33,6 +36,12 @@ class DetailsCharacterFragment: BaseFragment<FragmentDetailsCharacterBinding, De
     private lateinit var characterModel: CharacterModel
     private val args: DetailsCharacterFragmentArgs by navArgs()
 
+    //TODO: este metodo diz que este gragmente vai ter a opção de menu!
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -46,6 +55,19 @@ class DetailsCharacterFragment: BaseFragment<FragmentDetailsCharacterBinding, De
         setupRecyclerView()
         onLoadCharacter(characterModel)
         collectObserver()
+        binding.tvDescriptionCharacterDetails.setOnClickListener {
+            onShowDialog(characterModel)
+        }
+    }
+
+    private fun onShowDialog(characterModel: CharacterModel) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(characterModel.name)
+            .setMessage(characterModel.description)
+            .setNegativeButton(getString(R.string.close_dialog)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun collectObserver() = lifecycleScope.launch {
@@ -97,4 +119,20 @@ class DetailsCharacterFragment: BaseFragment<FragmentDetailsCharacterBinding, De
         rvComics.adapter = comicAdapter
         rvComics.layoutManager = LinearLayoutManager(context)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_details, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.favorite -> {
+                //viewModel.insert(characterModel)
+                toast(getString(R.string.saved_successfully))
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

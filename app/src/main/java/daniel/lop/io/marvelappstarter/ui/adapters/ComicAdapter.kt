@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import daniel.lop.io.marvelappstarter.data.model.comics.ComicModel
 import daniel.lop.io.marvelappstarter.databinding.ItemComicBinding
+import daniel.lop.io.marvelappstarter.util.limitDescription
 
 class ComicAdapter : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>() {
 
@@ -44,7 +45,12 @@ class ComicAdapter : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>() {
         val comic = comics[position]
         holder.biding.apply {
             tvNameComic.text = comic.title
-            tvDescriptionComic.text = comic.description
+
+            if (comic.description.isNullOrEmpty()) {
+                tvDescriptionComic.text = "Nao possui descrição"
+            } else {
+                tvDescriptionComic.text = comic.description.limitDescription(100)
+            }
 
             Glide.with(holder.itemView.context)
                 .load(comic.thumbnailModel.path + "." + comic.thumbnailModel.extension)

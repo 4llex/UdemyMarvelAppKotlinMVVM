@@ -34,5 +34,9 @@ class FavoriteCharacterViewModel @Inject constructor(
         }
     }
 
+    fun delete(character: CharacterModel) = viewModelScope.launch {
+        repository.delete(character)
+    }
+
 
 }
